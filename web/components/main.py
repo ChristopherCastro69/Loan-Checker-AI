@@ -1,13 +1,5 @@
 import streamlit as st
-from forms.app_form import display_app_form
-from forms.info_form import display_info_form
-
-@st.dialog("Loan Prediction by Chris")
-def show_content(item):
-    if item == "About the model.":
-        return display_info_form()
-    elif item == "Please fill up the application form.":
-        return display_app_form()
+from content_display import show_content, display_submission_details
 
 if "content" not in st.session_state:
     st.session_state.content = None
@@ -35,6 +27,9 @@ if st.session_state.content:
     if st.session_state.content['reason']:
         st.write(st.session_state.content['reason'])
 
-    
+# Display recent submission details if available
+if st.session_state.get("form_submitted"):
+    display_submission_details()
+
 with open("web/styles/app_form.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)

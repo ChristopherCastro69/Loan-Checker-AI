@@ -29,28 +29,36 @@ def display_app_form():
             return None
 
         try:
-            loan_amount = float(loan_amount)
-            loan_term = float(loan_term)
-            credit = float(credit)
+            loan_amount = round(float(loan_amount), 2) 
+            loan_term = round(float(loan_term))  
+            credit = round(float(credit))  
             if loan_amount < 0 or loan_term < 0 or credit < 0:
                 raise ValueError("Values must be positive numbers or zero.")
         except ValueError:
             st.error("Please enter valid positive numbers for Loan Amount, Loan Term, and Credit History.")
             return None
 
-        # Display success message and submission details
-        st.success("Application submitted successfully!")  # Show success message
-        st.markdown(f"""
-        **Email:** {email}  
-        **Number of Family Members:** {family_members}  
-        **Education:** {education}  
-        **Gender:** {gender}  
-        **Self Employed:** {self_employed}  
-        **Marital Status:** {marital_status}  
-        **Loan Amount:** {loan_amount}  
-        **Loan Amount Term:** {loan_term}  
-        **Credit History:** {credit}  
-        **Property Area:** {property}  
-        """)
+        # Set session state for submission details
+        st.session_state.submission_details = {
+            "email": email,
+            "family_members": family_members,
+            "education": education,
+            "gender": gender,
+            "self_employed": self_employed,
+            "marital_status": marital_status,
+            "loan_amount": f"{loan_amount:.2f}",
+            "loan_term": loan_term,
+            "credit": credit,
+            "property": property
+        }
+        st.session_state.form_submitted = True
+        st.rerun()  
+
+    # Show success dialog if form is submitted
+    if st.session_state.get("form_submitted"):
+        # st.dialog("Application Submitted")  # Call the dialog directly
+        # st.success("Application submitted successfully!")  
+       
+        st.session_state.form_submitted = False  # Reset the submission flag
 
     return None
