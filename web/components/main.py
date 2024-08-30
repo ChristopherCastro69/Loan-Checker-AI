@@ -1,5 +1,6 @@
 import streamlit as st
 from content_display import show_content, display_submission_details
+from scaler import display_scaled_details
 
 if "content" not in st.session_state:
     st.session_state.content = None
@@ -30,6 +31,6 @@ if st.session_state.content:
 # Display recent submission details if available
 if st.session_state.get("form_submitted"):
     display_submission_details()
-
+    display_scaled_details()
 with open("web/styles/app_form.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)

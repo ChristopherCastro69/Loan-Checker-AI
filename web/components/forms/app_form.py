@@ -7,10 +7,13 @@ def display_app_form():
     family_members = st.number_input("Number of Dependent Family Members", min_value=0, max_value=69, value=0)
 
     education = st.selectbox("Education", ["Graduate", "Not Graduate"])
+    income = st.text_input("Income", placeholder="Enter your income")
+    additional_income = st.text_input("Additional Income", placeholder="Enter your additional income from other sources")
     gender = st.radio("Gender", ["Male", "Female"])
     self_employed = st.radio("Are you self employed?", ["Yes", "No"])
     marital_status = st.radio("Are you married?", ["Yes", "No"])
     loan_amount = st.text_input("Loan Amount", placeholder="Enter the amount you want to loan")
+    
 
     loan_term = st.text_input("Loan Amount Term", placeholder="Enter the loan's repayment period (in days)")
 
@@ -30,12 +33,14 @@ def display_app_form():
 
         try:
             loan_amount = round(float(loan_amount), 2) 
+            income = round(float(income), 2)
+            additional_income = round(float(additional_income), 2)
             loan_term = round(float(loan_term))  
-            credit = round(float(credit))  
-            if loan_amount < 0 or loan_term < 0 or credit < 0:
+            credit = round(float(credit), 2)  
+            if loan_amount < 0 or loan_term < 0 or credit < 0 or income < 0 or additional_income < 0:
                 raise ValueError("Values must be positive numbers or zero.")
         except ValueError:
-            st.error("Please enter valid positive numbers for Loan Amount, Loan Term, and Credit History.")
+            st.error("Please enter valid positive numbers for either Loan Amount, Loan Term, Credit History, Income, and Additional Income.")
             return None
 
         # Set session state for submission details
@@ -43,12 +48,14 @@ def display_app_form():
             "email": email,
             "family_members": family_members,
             "education": education,
+            "income": f"{income:.2f}",
+            "additional_income": f"{additional_income:.2f}",
             "gender": gender,
             "self_employed": self_employed,
             "marital_status": marital_status,
             "loan_amount": f"{loan_amount:.2f}",
             "loan_term": loan_term,
-            "credit": credit,
+            "credit":  f"{credit:.2f}",
             "property": property
         }
         st.session_state.form_submitted = True
