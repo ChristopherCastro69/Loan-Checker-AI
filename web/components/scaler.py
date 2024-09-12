@@ -1,9 +1,37 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
+from predict import predict_loan
 
 def scale_data(submission_details):
     scaled_data = {}
+
+    # Income
+    income = float(submission_details['income'])
+    scaled_data['ApplicantIncome'] = np.sqrt(income)
+
+    # Additional Income
+    additional_income = float(submission_details['additional_income'])
+    scaled_data['CoapplicantIncome'] = np.sqrt(additional_income)
+
+    # Loan Amount
+    loan_amount = float(submission_details['loan_amount'])
+    scaled_data['LoanAmount'] = np.sqrt(loan_amount)
+    
+    # Loan Amount Term
+    loan_term = float(submission_details['loan_term'])
+    scaled_data['Loan_Amount_Term'] = loan_term
+    
+    # Credit History
+    # credit = float(submission_details['credit'])
+    # scaled_data['Credit_History'] = np.sqrt(credit)
+    scaled_data['Credit_History'] = 1 if submission_details['credit'] == 'Yes' else 0
+
+    # Gender
+    scaled_data['Gender'] = 1 if submission_details['gender'] == 'Male' else 0
+
+    # Marital Status
+    scaled_data['Married'] = 1 if submission_details['marital_status'] == 'Married' else 0
 
     # Family Members
     family_members = submission_details['family_members']
@@ -15,37 +43,22 @@ def scale_data(submission_details):
     # Education
     scaled_data['Education'] = 1 if submission_details['education'] == 'Graduate' else 0
 
-    # Income
-    income = float(submission_details['income'])
-    scaled_data['Income'] = np.sqrt(income)
-
-    # Additional Income
-    additional_income = float(submission_details['additional_income'])
-    scaled_data['Additional_Income'] = np.sqrt(additional_income)
-
-    # Loan Amount
-    loan_amount = float(submission_details['loan_amount'])
-    scaled_data['Loan_Amount'] = np.sqrt(loan_amount)
-
-    # Gender
-    scaled_data['Gender'] = 1 if submission_details['gender'] == 'Male' else 0
-
     # Self Employed
-    scaled_data['Self_Employed'] = 1 if submission_details['self_employed'] == 'Yes' else 0
-
-    # Marital Status
-    scaled_data['Marital_Status'] = 1 if submission_details['marital_status'] == 'Married' else 0
+    scaled_data['Self_Employed'] = 1 if submission_details['self_employed'] == 'Yes' else 0    
 
     # Property Area
     property_area = submission_details['property']
     scaled_data['Property_Area_Rural'] = 1 if property_area == 'Rural' else 0
-    scaled_data['Property_Area_Urban'] = 1 if property_area == 'Urban' else 0
     scaled_data['Property_Area_Semiurban'] = 1 if property_area == 'Semiurban' else 0
+    scaled_data['Property_Area_Urban'] = 1 if property_area == 'Urban' else 0
 
     return pd.DataFrame([scaled_data])
 
 
 def display_scaled_details():
     scaled_data = scale_data(st.session_state.submission_details)
-    st.write("Scaled Submission Details:")
+    st.session_state.scaled_data = scaled_data  # Store scaled data in session state
+    # st.write("Scaled Submission Details:")
     st.dataframe(scaled_data)
+    # if st.button("Apply for a loan"):
+    #    predict_loan()

@@ -17,13 +17,13 @@ def display_app_form():
 
     loan_term = st.text_input("Loan Amount Term", placeholder="Enter the loan's repayment period (in days)")
 
-    credit = st.text_input("Credit History", placeholder="Enter your recent credit history points")
+    credit = st.radio("Do you have a credit history?", ["Yes", "No"])
     property = st.selectbox("Property Location", ["Rural", "Urban", "Semiurban"])
     terms = st.checkbox("I accept the terms and conditions.")
 
     # Validate inputs to ensure all fields are filled and are valid
     if st.button("Submit Application"):
-        if not all([email, education, gender, self_employed, marital_status, loan_amount, loan_term, credit, property]):
+        if not all([email, education, gender, self_employed, marital_status, loan_amount, loan_term, property]):
             st.error("All fields are required.")
             return None
 
@@ -36,11 +36,10 @@ def display_app_form():
             income = round(float(income), 2)
             additional_income = round(float(additional_income), 2)
             loan_term = round(float(loan_term))  
-            credit = round(float(credit), 2)  
-            if loan_amount < 0 or loan_term < 0 or credit < 0 or income < 0 or additional_income < 0:
+            if loan_amount < 0 or loan_term < 0 or income < 0 or additional_income < 0:
                 raise ValueError("Values must be positive numbers or zero.")
         except ValueError:
-            st.error("Please enter valid positive numbers for either Loan Amount, Loan Term, Credit History, Income, and Additional Income.")
+            st.error("Please enter valid positive numbers for either Loan Amount, Loan Term, Income, and Additional Income.")
             return None
 
         # Set session state for submission details
@@ -55,17 +54,15 @@ def display_app_form():
             "marital_status": marital_status,
             "loan_amount": f"{loan_amount:.2f}",
             "loan_term": loan_term,
-            "credit":  f"{credit:.2f}",
+            "credit":  credit,
             "property": property
         }
         st.session_state.form_submitted = True
+        st.session_state.applicant_modal = True  # Set applicant_modal to True
         st.rerun()  
 
     # Show success dialog if form is submitted
     if st.session_state.get("form_submitted"):
-        # st.dialog("Application Submitted")  # Call the dialog directly
-        # st.success("Application submitted successfully!")  
-       
         st.session_state.form_submitted = False  # Reset the submission flag
 
     return None
