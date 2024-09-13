@@ -1,74 +1,41 @@
 [data-testid="stForm"] {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  /* color: rgb(0, 0, 0); */
-  border-radius: 1rem;
+  background: #ffb95e;
 }
 
-text {
-  color: #000000;
+[data-testid="stDialog"] {
+  background-color: rgba(255, 255, 255, 0.9);
 }
-
-input[type="text"] {
-  color: #020000;
-  background-color: #ffffff;
-}
-
-input[type="number"] {
-  color: #020000;
-  background-color: #ffffff;
-}
-input[type="text"]::placeholder {
-  color: #999595;
-  opacity: 1;
-}
-
-[data-testid="stForm"] label {
-  color: #000000;
-  font-weight: bold;
-  font-size: x-large;
-}
-
-div[data-baseweb="select"] > div {
-  background-color: white;
-  color: #000000;
-}
-
-div[role="listbox"] ul li {
-  color: black;
-  background-color: #f0f0f0;
-}
-
-label[data-baseweb="radio"] div {
-  color: black;
-}
-
-label[data-baseweb="checkbox"] div {
-  color: black;
-}
-button[data-baseweb="button"] {
-  border: 2px solid green;
-  color: black;
-}
-button[data-baseweb="button"]:hover {
-  background-color: red;
-  color: white;
-}
-
-body {
-  background-color: #f0f0f0;
-}
-
-/* Background image styles */
-[data-testid="stAppViewContainer"] > .main {
-  background-image: url("https://i.postimg.cc/4xgNnkfX/Untitled-design.png");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: local;
-}
-
-[data-testid="stHeader"] {
+[data-testid="stModal"] {
   background: rgba(0, 0, 0, 0);
+}
+
+[data-testid="stToolbar"] {
+  right: 2rem;
+}
+
+[data-testid="stAppViewBlockContainer"] {
+  margin-right: 35rem;
+}
+
+[data-testid="stVerticalBlock"] {
+  width: 400px;
+}
+
+[data-testid="stAppViewBlockContainer"] {
+  width: 50%;
+  padding: 35rem 6rem 6rem 6rem;
+  position: fixed;
+}
+
+/* Buttons */
+
+[data-testid="baseButton-secondary"] {
+  border-color: #ffb95e;
+  color: rgb(117, 117, 117);
+  flex: auto;
+}
+
+[data-testid="baseButton-secondary"]:hover {
+  background-color: #ffb95e;
+  color: white;
 }

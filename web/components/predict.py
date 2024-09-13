@@ -6,7 +6,6 @@ from sklearn.preprocessing import MinMaxScaler
 def predict_loan():
     # Load the dataset
     dataset = pd.read_csv('dataset/scaled_loan_dataset.csv')
-    # st.write("Dataset", dataset)  
     st.session_state.raw_dataset = dataset
     
     # Get the scaled data from session state
@@ -18,7 +17,6 @@ def predict_loan():
     
     # Combine the scaled data with the dataset
     before_minmax_data = pd.concat([scaled_data, dataset], ignore_index=True)
-    # st.write("Before the minmax combined data:", combined_data)
     st.session_state.before_minmax_data = before_minmax_data
 
     # Apply MinMaxScaler to combined_data
@@ -27,12 +25,7 @@ def predict_loan():
     
     # Convert back to DataFrame for further processing
     combined_data = pd.DataFrame(combined_data, columns=dataset.columns)  # Adjust columns as needed
-    # st.write("After the minmax combined data:", combined_data)
     st.session_state.after_minmax_data = combined_data
-    
-    # Display the combined data for debugging
-    # st.subheader('Combined Data')
-    # st.write(combined_data)
     
     # Load the model
     try:
@@ -42,12 +35,7 @@ def predict_loan():
         st.error("Model file not found.")
         return
     
-    # Display model parameters for debugging
-    # st.subheader('Model Parameters')
-    # st.write(model.get_params())
-    
     # Display prediction values
-    # st.write("Prediction Values:", combined_data.iloc[0:1])
     st.session_state.predicted_data = combined_data.iloc[0:1]
     
      

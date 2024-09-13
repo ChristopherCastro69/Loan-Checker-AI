@@ -9,26 +9,24 @@ from predict import predict_loan
 from scaler import scale_data
 from hooks import load_lottiefile, load_lottieurl
 
-
-whole_dataset = pd.read_csv('dataset\\train_u6lujuX_CVtuZ9i.csv')
-
+#Lottie Files animation
 lottie_decline = load_lottiefile(r"web\lottiefiles\decline.json") 
 lottie_approved = load_lottiefile(r"web\lottiefiles\approved2.json") 
 
 
-
+#Content Dialog
 @st.dialog("Welcome to Ai Bank by Chris!")
-def show_content(item):
+def content_dialog(item):
     if item == "About the model.":
         return display_info_form()
     elif item == "Please fill up the application form.":
         st.session_state.open_new_application = False
         return display_app_form()
         
-        
+#Form Dialog    
 @st.dialog("Welcome!")
-def display_submission_details():
-    st.session_state.applicant_modal = False
+def submitted_form_dialog():
+    st.session_state.open_form_dialog = False
     st.write("Recent Submission Details:")
     st.markdown(f"""
     **Email:** {st.session_state.submission_details['email']}  
@@ -57,13 +55,15 @@ def display_submission_details():
             
     with col2:
         if st.button("Get Loan"):
-            st.session_state.open_result_modal = True
+            st.session_state.open_result_dialog = True
             st.rerun()
-
+            
+#Results Dialog
 @st.dialog("Result")
-def display_result():
-    st.session_state.scaled_data = scale_data(st.session_state.submission_details) 
+def result_dialog():
     st.session_state.open_new_application = False
+    
+    st.session_state.scaled_data = scale_data(st.session_state.submission_details) 
     prediction = predict_loan()
     
     if prediction is None:
@@ -78,7 +78,7 @@ def display_result():
             speed=1,
             reverse=False,
             loop=True,
-            quality="low", # medium ; high
+            quality="high", # medium ; high
             height=None,
             width=None,
             key=None,
@@ -90,29 +90,31 @@ def display_result():
             speed=1,
             reverse=False,
             loop=True,
-            quality="low", # medium ; high
+            quality="high", # medium ; high
             height=None,
             width=None,
             key=None,
         )
-
-        
-    # st.session_state.open_result_modal = False
+    
     
     if st.button("Details"):
-        st.session_state.open_details_modal = True
-        st.session_state.open_result_modal = False
+        st.session_state.open_details_dialog = True
+        st.session_state.open_result_dialog = False
         st.rerun()
         
     if st.button("Apply another loan"):
         st.session_state.form_submitted = False
         st.session_state.submission_details = {}
         st.session_state.open_new_application = True
+        st.session_state.open_result_dialog = False
         st.rerun()    
+    
+    st.session_state.open_result_dialog = False
+    
 
-
+#Details Dialog
 @st.dialog("Details")
-def display_details():
+def details_dialog():
 
     st.write("Scaled Submission Details:")
     st.dataframe(st.session_state.scaled_data)
@@ -141,7 +143,9 @@ def display_details():
     else:
         st.error("No data available.") 
     
-    st.session_state.open_details_modal = False
+    st.session_state.open_details_dialog = False
+    st.session_state.open_result_dialog = False
+    
     
 
     

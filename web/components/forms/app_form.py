@@ -57,12 +57,11 @@ def display_app_form():
             "credit":  credit,
             "property": property
         }
-        st.session_state.form_submitted = True
-        st.session_state.applicant_modal = True  # Set applicant_modal to True
+        st.session_state.form_submitted = True 
+        st.session_state.open_form_dialog = True  
         st.rerun()  
 
     # Show success dialog if form is submitted
     if st.session_state.get("form_submitted"):
-        st.session_state.form_submitted = False  # Reset the submission flag
-
+        st.session_state.form_submitted = False  
     return None
