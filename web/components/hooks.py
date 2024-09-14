@@ -2,7 +2,6 @@ import json
 import base64
 import requests  # pip install requests
 import streamlit as st  # pip install streamlit
-from streamlit_lottie import st_lottie  # pip install streamlit-lottie
 
 #Lottie Files
 def load_lottiefile(filepath: str):

@@ -1,29 +1,28 @@
 import streamlit as st
+import pandas as pd
 
 def display_app_form():
 
     st.caption("Please fill up the application form")
     email = st.text_input("Email", placeholder="Enter your email")
-    family_members = st.number_input("Number of Dependent Family Members", min_value=0, max_value=69, value=0)
-
-    education = st.selectbox("Education", ["Graduate", "Not Graduate"])
+    family_members = st.selectbox("Number of people you are providing", ["0","1", "2", "3+"])
+    
     income = st.text_input("Income", placeholder="Enter your income")
     additional_income = st.text_input("Additional Income", placeholder="Enter your additional income from other sources")
-    gender = st.radio("Gender", ["Male", "Female"])
-    self_employed = st.radio("Are you self employed?", ["Yes", "No"])
-    marital_status = st.radio("Are you married?", ["Yes", "No"])
     loan_amount = st.text_input("Loan Amount", placeholder="Enter the amount you want to loan")
-    
 
-    loan_term = st.text_input("Loan Amount Term", placeholder="Enter the loan's repayment period (in days)")
+    loan_term = st.text_input("Loan Amount Term (months)", placeholder="Enter the loan's repayment period (in months)")
 
     credit = st.radio("Do you have a credit history?", ["Yes", "No"])
+    # Convert credit history to 1 or 0
+    credit_history = 1 if credit == "Yes" else 0
+
     property = st.selectbox("Property Location", ["Rural", "Urban", "Semiurban"])
     terms = st.checkbox("I accept the terms and conditions.")
 
     # Validate inputs to ensure all fields are filled and are valid
     if st.button("Submit Application"):
-        if not all([email, education, gender, self_employed, marital_status, loan_amount, loan_term, property]):
+        if not all([email,loan_amount, loan_term, property]):
             st.error("All fields are required.")
             return None
 
@@ -42,21 +41,19 @@ def display_app_form():
             st.error("Please enter valid positive numbers for either Loan Amount, Loan Term, Income, and Additional Income.")
             return None
 
-        # Set session state for submission details
-        st.session_state.submission_details = {
+        st.session_state.email = {
             "email": email,
-            "family_members": family_members,
-            "education": education,
-            "income": f"{income:.2f}",
-            "additional_income": f"{additional_income:.2f}",
-            "gender": gender,
-            "self_employed": self_employed,
-            "marital_status": marital_status,
-            "loan_amount": f"{loan_amount:.2f}",
-            "loan_term": loan_term,
-            "credit":  credit,
-            "property": property
         }
+        
+        st.session_state.df_submitted_details = pd.DataFrame({       
+            "dependents": [family_members],     
+            "applicant_income": [f"{income:.2f}"],
+            "coapplicant_income": [f"{additional_income:.2f}"],
+            "loan_amount": [f"{loan_amount:.2f}"],
+            "loan_amount_term": [loan_term],
+            "credit_history": [credit_history],
+            "property_area": [property]
+        })
         st.session_state.form_submitted = True 
         st.session_state.open_form_dialog = True  
         st.rerun()  
