@@ -52,6 +52,7 @@ if st.session_state.get("open_result_dialog", False):
 if st.session_state.get("open_details_dialog", False):
     details_dialog()
 
+
 # Check if the CSS file exists before attempting to open it
 def load_css(file_path):
     if os.path.exists(file_path):

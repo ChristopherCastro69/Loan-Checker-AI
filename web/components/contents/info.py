@@ -15,7 +15,7 @@ def display_info_form():
         key=None,
     )
     st.write("**Overview**")
-    st.write("Welcome to my Loan Prediction Application! This project leverages machine learning to predict loan approvals using Gaussian Naïve Bayes (GNB), with an impressive 85% accuracy score from the testing and training data.")
+    st.write("Welcome to my Loan Prediction Application! This project leverages machine learning to predict loan approvals using **Gaussian Naïve Bayes (GNB)**, with an impressive **85% accuracy** score from the testing and training data.")
     
     st.write("**How Does the Loan Process Work?**")
     st.write("When someone applies for a loan, they fill out various details such as their income, marital status, education, credit history, and more. This information is then used by the bank to assess whether the applicant is eligible for a loan. Normally, this process can be time-consuming, requiring manual review. My project seeks to automate this loan approval process in real time, helping banks make faster and more informed decisions.")
@@ -40,32 +40,31 @@ def display_info_form():
     st.write("- **Loan_Status**: Final loan status (Y: approved, N: rejected)")
     
     st.write("**What I Found in the Data**")
-    st.write("During my analysis on Kaggle, I found some interesting relationships between variables. Here are the highlights:")
-    st.write("- Variables like gender and marital status showed significant differences when tested with other variables like 'education' and 'dependents.'")
-    st.write("- However, in many cases, there was no significant difference between variables such as education and loan status, or self-employment and loan status. This shows that not all variables are strongly associated with one another in this particular dataset.")
+    st.image("web/images/correlation.png")
+    
+    st.write("During my analysis on Kaggle, I discovered key relationships between variables:")
+    st.write("- **Significant Differences**: Variables like **gender** and **marital status** showed notable differences when analyzed with **education** and **dependents**.")
+    st.write("- **Lack of Association**: Conversely, variables such as **education** and **self-employment** did not show significant differences, indicating weaker associations in the dataset.")
     
     st.write("**Key Numeric Attributes**")
-    st.write("By using Z-tests, I analyzed numeric attributes such as applicant_income and loan_amount_term to detect any significant differences between groups. The most important finding was that credit history had a significant difference in determining loan approval. This insight became crucial for my model's predictions.")
+    st.write("By using Z-tests, I analyzed numeric attributes such as **applicant_income** and **loan_amount_term** to detect any significant differences between groups. The most important finding was that **credit history** had a significant difference in determining loan approval. This insight became crucial for my model's predictions.")
     
     st.write("**Important Features for Prediction 🔑**")
     st.write("After diving into the data, I identified the following key features that impact loan approval the most:")
-    st.write("| Feature               | Importance Score |")
-    st.write("|-----------------------|------------------|")
-    st.write("| applicant_income      | ~0.159           |")
-    st.write("| coapplicant_income    | ~0.091           |")
-    st.write("| loan_amount           | ~0.156           |")
-    st.write("| loan_amount_term      | ~0.052           |")
-    st.write("| credit_history        | ~0.337           |")
-    st.write("| dependents            | ~0.045           |")
-    st.write("| property_area         | ~0.055           |")
+    st.image("web/images/feature-importance.png")
+    st.image("web/images/final-features.png")
     
-    st.write("The credit history feature stands out the most, indicating it plays a critical role in whether a loan is approved or not.")
+    
+    st.write("The **credit history** feature stands out the most, indicating it plays a critical role in whether a loan is approved or not. The final features for this prediction are **applicant_income, coapplicant_income, loan_amount, loan_amount_term, credit_history, dependents, and propery_area.**")
     
     st.write("**The Model: Gaussian Naïve Bayes**")
     st.write("Through testing various models, I found that Gaussian Naïve Bayes performed the best, with the following results:")
     st.write("- **Train Score**: 0.852")
     st.write("- **Test Score**: 0.8182")
-    st.write("Given its high performance, I chose GNB as the model for deployment on my Streamlit application. It's now being used to predict loan statuses based on user input, providing instant feedback on loan eligibility.")
+    st.image("web/images/gnb-matrix.png")
+    st.image("web/images/best-model.png")
+    
+    st.write("Given its high performance, I chose **GNB** as the model for deployment on my Streamlit application. It's now being used to predict loan statuses based on user input, providing instant feedback on loan eligibility.")
     
     st.write("**Why These Features Matter in Real Life 💡**")
     st.write("In real life, when you apply for a loan, banks don't just look at one factor—they consider a variety of things to assess risk. For example:")
@@ -75,9 +74,7 @@ def display_info_form():
     
     st.write("By feeding all these factors into the machine learning model, I can predict the likelihood of loan approval based on the patterns found in past applications.")
     
-    st.write("**Conclusion**")
-    st.write("In real life, loan approval isn't just about one or two factors—it's about combining multiple aspects of a person's financial history and current situation. By using Gaussian Naïve Bayes, my model predicts loan approval based on the most important factors that have been identified through analysis. It's exciting to see how these features interact and how we can use them to predict loan outcomes quickly and accurately.")
-    
+
     # Add project links
     st.write("**Project Links**")
     st.write("- **Dataset**: [Kaggle Dataset](https://www.kaggle.com/datasets/bhavikjikadara/loan-status-prediction)")

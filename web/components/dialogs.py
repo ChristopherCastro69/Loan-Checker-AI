@@ -1,12 +1,10 @@
 import streamlit as st
-import pandas as pd
-
-import streamlit as st  # pip install streamlit
 from streamlit_lottie import st_lottie  # pip install streamlit-lottie
-from forms.app_form import display_app_form
-from forms.info_form import display_info_form
+from contents.apply import display_app_form
+from contents.info import display_info_form
 from hooks import load_lottiefile
 from predict import predict_loan
+from contents.details import display_summary
 
 #Lottie Files animation
 lottie_decline = load_lottiefile(r"web\lottiefiles\decline.json") 
@@ -28,7 +26,7 @@ def submitted_form_dialog():
     st.session_state.open_form_dialog = False
     st.write("Recent Submission Details:")
     st.markdown(f"""
-    
+    **Email:** {st.session_state.email['email']}                                           
     **Number of Dependent Family Members:** {st.session_state.df_submitted_details['dependents'].values[0]}  
     **Income:** {st.session_state.df_submitted_details['applicant_income'].values[0]}  
     **Additional Income:** {st.session_state.df_submitted_details['coapplicant_income'].values[0]}  
@@ -92,7 +90,7 @@ def result_dialog():
         st.session_state.open_details_dialog = True
         st.session_state.open_result_dialog = False
         st.rerun()
-         
+    display_summary()
     st.session_state.open_result_dialog = False
     
 
