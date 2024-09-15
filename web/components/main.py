@@ -3,47 +3,46 @@ import os
 from dialogs import content_dialog, submitted_form_dialog, result_dialog, details_dialog
 from hooks import set_png_as_page_bg
 
+# Constants
+BACKGROUND_IMAGE = 'web/images/bg.png'
+CSS_FILE_PATH = "web/styles/styles.css"
+INFO_DIALOG = "About the model."
+APPLICATION_DIALOG = "Please fill up the application form."
 
 # Set the background image
-set_png_as_page_bg('web/images/bg.png')
+set_png_as_page_bg(BACKGROUND_IMAGE)
 
 if "content" not in st.session_state:
     st.session_state.content = None
 
 col1, col2 = st.columns(2)
 
+def handle_button_click(item, dialog_message):
+    st.session_state.open_results_dialog = False
+    st.session_state.open_details_dialog = False
+    st.session_state.open_new_application = False
+    st.session_state.content = {"item": item, "reason": None}
+    reason = content_dialog(dialog_message)
+    if reason is not None:
+        st.session_state.content["reason"] = reason
+
 with col1:
     if st.button("Info"):
-        st.session_state.open_results_dialog = False
-        st.session_state.open_details_dialog = False
-        st.session_state.open_new_application = False
-        
-        st.session_state.content = {"item": "Info", "reason": None}
-        reason = content_dialog("About the model.")
-        if reason is not None:
-            st.session_state.content["reason"] = reason
+        handle_button_click("Info", INFO_DIALOG)
 
 with col2:
     if st.button("Apply"):
-        st.session_state.open_result_dialog = False
-        st.session_state.open_details_dialog = False
-        st.session_state.content = {"item": "Apply", "reason": None}
-        reason = content_dialog("Please fill up the application form.")
-        if reason is not None:
-            st.session_state.content["reason"] = reason
+        handle_button_click("Apply", APPLICATION_DIALOG)
 
-if st.session_state.content:
-    if st.session_state.content['reason']:
-        st.write(st.session_state.content['reason'])
-        
+if st.session_state.content and st.session_state.content['reason']:
+    st.write(st.session_state.content['reason'])
 
 if st.session_state.get("open_new_application", False):
-    content_dialog("Please fill up the application form.")
+    content_dialog(APPLICATION_DIALOG)
 
 # Display recent submission details if available
-if st.session_state.get("form_submitted"):
-    if st.session_state.get("open_form_dialog", False):
-        submitted_form_dialog()
+if st.session_state.get("form_submitted") and st.session_state.get("open_form_dialog", False):
+    submitted_form_dialog()
 
 # Display result if success_modal is True
 if st.session_state.get("open_result_dialog", False):
@@ -51,12 +50,15 @@ if st.session_state.get("open_result_dialog", False):
 
 # Display the details of the predicted value
 if st.session_state.get("open_details_dialog", False):
-     details_dialog()
+    details_dialog()
+
 
 # Check if the CSS file exists before attempting to open it
-css_file_path = "web/styles/styles.css"
-if os.path.exists(css_file_path):
-    with open(css_file_path) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-else:
-    st.error(f"CSS file not found: {css_file_path}")
+def load_css(file_path):
+    if os.path.exists(file_path):
+        with open(file_path) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    else:
+        st.error(f"CSS file not found: {file_path}")
+
+load_css(CSS_FILE_PATH)

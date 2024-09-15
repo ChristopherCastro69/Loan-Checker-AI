@@ -1,13 +1,10 @@
 import streamlit as st
-import pandas as pd
-
-import streamlit as st  # pip install streamlit
 from streamlit_lottie import st_lottie  # pip install streamlit-lottie
-from forms.app_form import display_app_form
-from forms.info_form import display_info_form
+from contents.apply import display_app_form
+from contents.info import display_info_form
+from hooks import load_lottiefile
 from predict import predict_loan
-from scaler import scale_data
-from hooks import load_lottiefile, load_lottieurl
+from contents.details import display_summary
 
 #Lottie Files animation
 lottie_decline = load_lottiefile(r"web\lottiefiles\decline.json") 
@@ -29,30 +26,24 @@ def submitted_form_dialog():
     st.session_state.open_form_dialog = False
     st.write("Recent Submission Details:")
     st.markdown(f"""
-    **Email:** {st.session_state.submission_details['email']}  
-    **Number of Dependent Family Members:** {st.session_state.submission_details['family_members']}  
-    **Education:** {st.session_state.submission_details['education']}  
-    **Income:** {st.session_state.submission_details['income']}  
-    **Additional Income:** {st.session_state.submission_details['additional_income']}  
-    **Gender:** {st.session_state.submission_details['gender']}  
-    **Self Employed:** {st.session_state.submission_details['self_employed']}  
-    **Marital Status:** {st.session_state.submission_details['marital_status']}  
-    **Loan Amount:** {st.session_state.submission_details['loan_amount']}  
-    **Loan Amount Term:** {st.session_state.submission_details['loan_term']}  
-    **Credit History:** {st.session_state.submission_details['credit']}  
-    **Property Area:** {st.session_state.submission_details['property']}
+    **Email:** {st.session_state.email['email']}                                           
+    **Number of Dependent Family Members:** {st.session_state.df_submitted_details['dependents'].values[0]}  
+    **Income:** {st.session_state.df_submitted_details['applicant_income'].values[0]}  
+    **Additional Income:** {st.session_state.df_submitted_details['coapplicant_income'].values[0]}  
+    **Loan Amount:** {st.session_state.df_submitted_details['loan_amount'].values[0]}  
+    **Loan Amount Term:** {st.session_state.df_submitted_details['loan_amount_term'].values[0]}  
+    **Credit History:** {st.session_state.df_submitted_details['credit_history'].values[0]}  
+    **Property Area:** {st.session_state.df_submitted_details['property_area'].values[0]}
     """)
     
     col1, col2 = st.columns(2)
+
     with col1:
         if st.button("Submit Another Application"):
             st.session_state.form_submitted = False
             st.session_state.submission_details = {}
             st.session_state.open_new_application = True
             st.rerun()
-
-            
-            
     with col2:
         if st.button("Get Loan"):
             st.session_state.open_result_dialog = True
@@ -63,7 +54,7 @@ def submitted_form_dialog():
 def result_dialog():
     st.session_state.open_new_application = False
     
-    st.session_state.scaled_data = scale_data(st.session_state.submission_details) 
+    predict_loan()
     prediction = predict_loan()
     
     if prediction is None:
@@ -95,57 +86,38 @@ def result_dialog():
             width=None,
             key=None,
         )
-    
-    
     if st.button("Details"):
         st.session_state.open_details_dialog = True
         st.session_state.open_result_dialog = False
         st.rerun()
-        
-    if st.button("Apply another loan"):
-        st.session_state.form_submitted = False
-        st.session_state.submission_details = {}
-        st.session_state.open_new_application = True
-        st.session_state.open_result_dialog = False
-        st.rerun()    
-    
+    display_summary()
     st.session_state.open_result_dialog = False
     
 
 #Details Dialog
 @st.dialog("Details")
 def details_dialog():
+    def display_data(key, description):
+        """Helper function to display data with error handling."""
+        st.write(description)
+        if key in st.session_state:
+            st.write(st.session_state[key])  # Display the dataset
+        else:
+            st.error(f"No {description.lower()} available.")
 
-    st.write("Scaled Submission Details:")
-    st.dataframe(st.session_state.scaled_data)
-    
-    st.write("Raw Loan Dataset:")
-    if 'raw_dataset' in st.session_state:
-        st.dataframe(st.session_state.raw_dataset)  # Display the loan dataset
-    else:
-        st.error("No loan dataset available.")
-        
-    st.write("Before Minmax Dataset:")
-    if 'before_minmax_data' in st.session_state:
-        st.dataframe(st.session_state.before_minmax_data)  # Display the loan dataset
-    else:
-        st.error("No before minmax dataset available.")
+    display_data('df_submitted_details', "Submitted Details:")
+    display_data('raw_dataset', "Raw Loan Dataset:")
+    display_data('before_scaling_data', "Combined Dataset with selected features:")
+    display_data('after_scaling_data', "Combined Dataset after scaling:")
+    display_data('predicted_data', "Predicted Data:")
 
-    st.write("After Minmax Dataset:")
-    if 'after_minmax_data' in st.session_state:
-        st.dataframe(st.session_state.after_minmax_data)  # Display the loan dataset
-    else:
-        st.error("No after minmax dataset available.")
-    
-    st.write("Predicted Data:")
-    if 'predicted_data' in st.session_state:
-        st.dataframe(st.session_state.predicted_data)  # Display the loan dataset
-    else:
-        st.error("No data available.") 
-    
     st.session_state.open_details_dialog = False
     st.session_state.open_result_dialog = False
     
-    
-
+    if st.button("Apply another loan"):
+        st.session_state.form_submitted = False
+        st.session_state.submission_details = {}
+        st.session_state.open_new_application = True
+        st.session_state.open_result_dialog = False
+        st.rerun()    
     
