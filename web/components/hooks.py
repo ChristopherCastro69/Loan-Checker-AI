@@ -5,9 +5,12 @@ import streamlit as st  # pip install streamlit
 
 #Lottie Files
 def load_lottiefile(filepath: str):
-    with open(filepath, "r") as f:
-        return json.load(f)
-
+    try:
+        with open(filepath, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        st.error(f"Lottie file not found: {filepath}")
+        return None
 
 def load_lottieurl(url: str):
     r = requests.get(url)
