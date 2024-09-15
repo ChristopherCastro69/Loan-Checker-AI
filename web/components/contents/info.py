@@ -15,7 +15,7 @@ def display_info_form():
         key=None,
     )
     st.write("**Overview**")
-    st.write("Welcome to my Loan Checker Application! This project leverages machine learning to predict loan approvals using **Gaussian Naïve Bayes (GNB)**, with an impressive **85% accuracy** score from the testing and training data.")
+    st.write("Welcome to my Loan Checker Ai! This project leverages machine learning to predict loan approvals using **Gaussian Naïve Bayes (GNB)**, with an impressive **85% accuracy** score from the testing and training data.")
     
     st.write("**How Does the Loan Process Work?**")
     st.write("When someone applies for a loan, they fill out various details such as their income, marital status, education, credit history, and more. This information is then used by the bank to assess whether the applicant is eligible for a loan. Normally, this process can be time-consuming, requiring manual review. My project seeks to automate this loan approval process in real time, helping banks make faster and more informed decisions.")
