@@ -2,8 +2,6 @@ import streamlit as st
 import os
 from dialogs import content_dialog, submitted_form_dialog, result_dialog, details_dialog
 from hooks import set_png_as_page_bg
-from streamlit_lottie import st_lottie  # pip install streamlit-lottie
-from hooks import load_lottiefile
 
 # Constants
 BACKGROUND_IMAGE = 'web/images/blank-bg.png'
@@ -11,7 +9,6 @@ CSS_FILE_PATH = "web/styles/styles.css"
 INFO_DIALOG = "About the model."
 APPLICATION_DIALOG = "Please fill up the application form."
 LOGO_URL = 'web/images/logo.png'
-lottie_bank = load_lottiefile("web/lottiefiles/money1.json") 
 
 
 # Set the background image
