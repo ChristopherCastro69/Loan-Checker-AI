@@ -12,7 +12,7 @@ lottie_approved = load_lottiefile("web/lottiefiles/approved2.json")
 
 
 #Content Dialog
-@st.dialog("Welcome to Loan Checker Application by Chris!")
+@st.dialog("Welcome to Loan Checker Ai by Chris!")
 def content_dialog(item):
     if item == "About the model.":
         return display_info_form()
