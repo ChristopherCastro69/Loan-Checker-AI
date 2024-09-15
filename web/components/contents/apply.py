@@ -11,6 +11,7 @@ def display_app_form():
     income = st.text_input("Annual Income ($)", placeholder="Enter your annual income in USD")
     additional_income = st.text_input("Annual Additional Income ($)", placeholder="Enter your additional annual income from other sources")
     loan_amount = st.text_input("Loan Amount ($)", placeholder="Enter the amount you want to loan")
+
     loan_term = st.text_input("Loan Amount Term (months)", placeholder="Enter the loan's repayment period (in months)")
     credit_history = 1 if st.radio("Do you have a credit history?", ["Yes", "No"]) == "Yes" else 0
     property_location = st.selectbox("Property Location", ["Rural", "Urban", "Semiurban"])

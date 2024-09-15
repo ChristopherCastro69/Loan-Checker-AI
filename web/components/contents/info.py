@@ -3,7 +3,7 @@ from hooks import load_lottiefile
 from streamlit_lottie import st_lottie 
 
 def display_info_form():
-    lottie_welcome = load_lottiefile(r"web\lottiefiles\approved1.json") 
+    lottie_welcome = load_lottiefile("web/lottiefiles/approved1.json") 
     st_lottie(
         lottie_welcome,
         speed=1,
