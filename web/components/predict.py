@@ -28,6 +28,7 @@ def predict_loan():
     columns_to_drop = ['education', 'gender', 'married', 'self_employed']
     scaled_data = combined_data.drop(columns=columns_to_drop, errors='ignore')
     st.session_state.selected_features_data = scaled_data.copy()
+    st.session_state.predicted_data = scaled_data.iloc[0:1]
     
     # Load the model
     try:
