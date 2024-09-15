@@ -37,7 +37,7 @@ def set_png_as_page_bg(png_file):
         .stApp {{
         background-image: url("data:image/png;base64,{bin_str}");
         background-size: cover;
-    
+
         }}
         </style>
         '''

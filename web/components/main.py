@@ -2,41 +2,58 @@ import streamlit as st
 import os
 from dialogs import content_dialog, submitted_form_dialog, result_dialog, details_dialog
 from hooks import set_png_as_page_bg
+from streamlit_lottie import st_lottie  # pip install streamlit-lottie
+from hooks import load_lottiefile
 
 # Constants
-BACKGROUND_IMAGE = 'web/images/bg.png'
+BACKGROUND_IMAGE = 'web/images/blank-bg.png'
 CSS_FILE_PATH = "web/styles/styles.css"
 INFO_DIALOG = "About the model."
 APPLICATION_DIALOG = "Please fill up the application form."
+LOGO_URL = 'web/images/logo.png'
+lottie_bank = load_lottiefile("web/lottiefiles/money1.json") 
+
 
 # Set the background image
 set_png_as_page_bg(BACKGROUND_IMAGE)
 
+# Initialize session state
 if "content" not in st.session_state:
     st.session_state.content = None
+
+# Display logo and title
+st.logo(LOGO_URL)
+st.divider()
+st.markdown('<h1 style="font-size:50px;color:#187078;">Bank Loan Checker</h1>', unsafe_allow_html=True)
+st.divider()
+
 
 col1, col2 = st.columns(2)
 
 def handle_button_click(item, dialog_message):
+    # Reset dialog states
     st.session_state.open_results_dialog = False
     st.session_state.open_details_dialog = False
     st.session_state.open_new_application = False
-    st.session_state.content = {"item": item, "reason": None}
-    reason = content_dialog(dialog_message)
-    if reason is not None:
-        st.session_state.content["reason"] = reason
+    st.session_state.content = {"item": item, "reason": content_dialog(dialog_message)}
 
-with col1:
-    if st.button("Info"):
-        handle_button_click("Info", INFO_DIALOG)
+# Create a container for the buttons
+with st.container():
+    st.caption("Experimental Loan Checker Application Powered by Ai")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Info"):
+            handle_button_click("Info", INFO_DIALOG)
 
-with col2:
-    if st.button("Apply"):
-        handle_button_click("Apply", APPLICATION_DIALOG)
+    with col2:
+        if st.button("Apply"):
+            handle_button_click("Apply", APPLICATION_DIALOG)
 
-if st.session_state.content and st.session_state.content['reason']:
+# Display reason if available
+if st.session_state.content and st.session_state.content.get('reason'):
     st.write(st.session_state.content['reason'])
 
+# Display dialogs based on session state
 if st.session_state.get("open_new_application", False):
     content_dialog(APPLICATION_DIALOG)
 

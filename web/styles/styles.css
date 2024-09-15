@@ -18,14 +18,14 @@
 }
 
 [data-testid="stVerticalBlock"] {
-  width: 400px;
+  width: auto;
 }
 
-[data-testid="stAppViewBlockContainer"] {
+/* [data-testid="stAppViewBlockContainer"] {
   width: 50%;
   padding: 35rem 6rem 6rem 6rem;
   position: fixed;
-}
+} */
 
 /* Buttons */
 
