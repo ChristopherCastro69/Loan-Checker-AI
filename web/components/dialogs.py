@@ -12,7 +12,7 @@ lottie_approved = load_lottiefile("web/lottiefiles/approved2.json")
 
 
 #Content Dialog
-@st.dialog("Welcome to Ai Bank by Chris!")
+@st.dialog("Welcome to Loan Checker Application by Chris!")
 def content_dialog(item):
     if item == "About the model.":
         return display_info_form()
@@ -91,6 +91,13 @@ def result_dialog():
         st.session_state.open_result_dialog = False
         st.rerun()
     display_summary()
+    
+    if st.button("Apply another loan"):
+        st.session_state.form_submitted = False
+        st.session_state.submission_details = {}
+        st.session_state.open_new_application = True
+        st.session_state.open_result_dialog = False
+        st.rerun()    
     st.session_state.open_result_dialog = False
     
 
