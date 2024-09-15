@@ -7,8 +7,8 @@ from predict import predict_loan
 from contents.details import display_summary
 
 #Lottie Files animation
-lottie_decline = load_lottiefile(r"web\lottiefiles\decline.json") 
-lottie_approved = load_lottiefile(r"web\lottiefiles\approved2.json") 
+lottie_decline = load_lottiefile("web/lottiefiles/decline.json") 
+lottie_approved = load_lottiefile("web/lottiefiles/approved2.json") 
 
 
 #Content Dialog
