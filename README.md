@@ -9,7 +9,7 @@ This project demonstrates how **AI** and **Machine Learning** can be applied to 
 
 Try the loan prediction app here: [Loan Checker AI](https://loan-checker-ai.streamlit.app/)
 
-Youtube Demo here: [Loan Checker AI](https://www.youtube.com/watch?v=dQRW1WTRDTA&t=2s)
+Youtube Demo here: [Loan Checker AI Demo](https://www.youtube.com/watch?v=dQRW1WTRDTA&t=2s)
 
 ---
 
