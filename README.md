@@ -3,6 +3,11 @@
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-Loan_Prediction_App-brightgreen.svg)](https://loan-checker-ai.streamlit.app/)
 
+![image](https://github.com/user-attachments/assets/4b336e52-8283-498d-9e27-1c291c14ad9c)
+![image](https://github.com/user-attachments/assets/cafd4dc5-e0af-4505-984b-f1f08a991d00)
+![image](https://github.com/user-attachments/assets/35bfde4e-f17f-4a81-ac70-31333a4a6286)
+
+
 This project demonstrates how **AI** and **Machine Learning** can be applied to **loan prediction** in the financial industry. By leveraging **Streamlit**, we've deployed a **Gaussian Naïve Bayes (GNB)** model that predicts loan approval based on user inputs. The aim is to create a seamless, automated process for loan applications, improving efficiency and accuracy.
 
 ## Demo
