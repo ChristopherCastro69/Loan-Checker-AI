@@ -1,6 +1,3 @@
-Here's a sample `README.md` file for your GitHub repository that showcases your loan prediction project using AI, Streamlit, and Python:
-
----
 
 # Loan Prediction with AI and Streamlit
 
@@ -11,7 +8,8 @@ This project demonstrates how **AI** and **Machine Learning** can be applied to 
 ## Demo
 
 Try the loan prediction app here: [Loan Checker AI](https://loan-checker-ai.streamlit.app/)
-Youtube Demo here: [Loan Checker AI Demo]([https://loan-checker-ai.streamlit.app/](https://www.youtube.com/watch?v=dQRW1WTRDTA&t=2s))
+
+Youtube Demo here: [Loan Checker AI](https://www.youtube.com/watch?v=dQRW1WTRDTA&t=2s)
 
 ---
 
