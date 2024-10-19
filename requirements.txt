@@ -1,7 +1,7 @@
 pandas
-numpy==1.26.0
+numpy
 nltk
-scikit-learn==1.2.2
+scikit-learn
 streamlit
 joblib
 streamlit-lottie
